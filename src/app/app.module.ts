@@ -1,30 +1,42 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
 
 // app-component => root component
 import { AppComponent } from './app.component';
 
 // components
 import { LoginComponent } from './login/components/login.component';
-import { MainComponent } from './main/components/main.component';
+import { AdminComponent } from './admin/components/admin.component';
+import { ExamComponent } from './exams/components/exam.component';
+import { StartMenuComponent } from './menu/components/start-menu.component';
+
 
 // services
-import { MainService } from './main/services/main.service';
+import { AdminService } from './admin/services/admin.service';
 import { LoginService } from './login/services/login.service';
+import { StartMenuService } from './menu/services/start-menu.service';
+
+import { AppRoutingModule } from './app.router.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    MainComponent
+    AdminComponent,
+    ExamComponent,
+    StartMenuComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule,
+    AppRoutingModule
   ],
   providers: [
-    MainService,
-    LoginService
+    AdminService,
+    LoginService,
+    StartMenuService
   ],
   bootstrap: [AppComponent]
 })
