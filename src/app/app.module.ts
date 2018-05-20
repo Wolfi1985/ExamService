@@ -11,6 +11,7 @@ import { LoginComponent } from './login/components/login.component';
 import { AdminComponent } from './admin/components/admin.component';
 import { ExamComponent } from './exams/components/exam.component';
 import { StartMenuComponent } from './menu/components/start-menu.component';
+import { ModalWindowComponent } from './modal-window/modal-window.component';
 
 
 // services
@@ -26,7 +27,8 @@ import { AppRoutingModule } from './app.router.component';
     LoginComponent,
     AdminComponent,
     ExamComponent,
-    StartMenuComponent
+    StartMenuComponent,
+    ModalWindowComponent
   ],
   imports: [
     BrowserModule,

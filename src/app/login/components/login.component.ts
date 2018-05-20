@@ -22,8 +22,10 @@ export class LoginComponent implements OnInit {
   private login() {
     this.loginService.login(this.userName, this.password);
   }
-  public logout() {
 
+  // if there is time we can make a logout screen
+  public logout() {
+    this.loginService.logout();
   }
 
 }

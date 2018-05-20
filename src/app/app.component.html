@@ -8,7 +8,7 @@
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav pull-sm-left">
       <li class="nav-item active">
         <a class="nav-link" [routerLink]="['/StartMenu']">Home
           <span class="sr-only">(current)</span>
@@ -20,7 +20,8 @@
       <li class="nav-item ">
         <a class="nav-link" [routerLink]="['/Exam']">Exams</a>
       </li>
-      <!--li class="nav-item dropdown">
+      <!-- dropdown if we need it later
+          li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Menü
           </a>
@@ -30,11 +31,41 @@
           </div
         </li>-->
     </ul>
-    <ul class="navbar-nav">
-      <span class="navbar-text">
-        Hello Mr. {{name}}
+    <ul class="navbar-nav mx-auto">
+      <div class="row justify-content-center">
+        <span class="navbar-text text-uppercase login-text align-self-center">
+          Exam Service
+        </span>
+      </div>
+    </ul>
+    <ul class="navbar-nav pull-sm-right">
+      <span class="navbar-text mr-4">
+        Hello Mr. {{firstName}} {{surName}}
       </span>
+      <button type="button" class="btn btn-dark" [routerLink]="['/']" (click)="logout()">Logout</button>
     </ul>
   </div>
 </nav>
+
+<!-- router outlet for the components -->
 <router-outlet></router-outlet>
+
+<!-- Modal Window for error messages -->
+<div #modalBackdrop>
+  <app-modal-window #errorMsg>
+    <div class="app-modal-header">
+      <h4>Login Error</h4>
+    </div>
+    <div class="app-modal-body">
+      <div class="row text-center d-block" style="margin-right: 10px; text-align: center;">
+        <h4 class="col-12 text-center" style="margin:0 auto; margin-bottom:20px;">
+          {{errorMessage}}
+        </h4>
+        <i class="fas fa-lock fa-3x"></i>
+      </div>
+    </div>
+    <div class="app-modal-footer">
+        <button type="button" class="btn btn-dark" [routerLink]="['/']" (click)="close()">Okay</button>
+    </div>
+  </app-modal-window>
+</div>
