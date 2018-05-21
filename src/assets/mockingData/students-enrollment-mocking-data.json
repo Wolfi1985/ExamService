@@ -1,0 +1,95 @@
+{
+  "enrollments": [{
+      "examId": "259.028",
+      "title": "Service Engineering",
+      "type": "Vorlesung",
+      "shortType": "VL",
+      "semester": "SS 2018",
+      "maxParticipants": 35,
+      "enrollments":8,
+      "description": "Die Studierenden verstehen die organisatorischen Modelle und Prozesse elektronischer und webbasierter Dienste (Services) im betrieblichen Umfeld.",
+      "enrollmentStart": "20.05.2018",
+      "enrollmentEnd": "15.06.2018",
+      "examDate": "20.05.2018",
+      "examStart": "15:00",
+      "examEnd": "16:30",
+      "participants": [{
+          "firstName": "Wolfgang",
+          "surName": "Heindl"
+        },
+        {
+          "firstName": "Robert",
+          "surName": "Emhofer"
+        },
+        {
+          "firstName": "Lisa",
+          "surName": "Grurl"
+        },
+        {
+          "firstName": "Lukas",
+          "surName": "Kleinhagauer"
+        },
+        {
+          "firstName": "Michael",
+          "surName": "Kreil"
+        }
+      ]
+    }, {
+      "examId": "258.450",
+      "title": "Semantische Technologien",
+      "type": "Vorlesung",
+      "shortType": "VL",
+      "semester": "SS 2018",
+      "maxParticipants": 40,
+      "enrollments":15,
+      "description": "Die Lehrinhalte werden in Form einer klassischen Vorlesung, die durch eine Übungsveranstaltung begleitet und ergänzt wird, vermittelt.",
+      "enrollmentStart": "20.05.2018",
+      "enrollmentEnd": "15.06.2018",
+      "examDate": "18.06.2018",
+      "examStart": "12:00",
+      "examEnd": "15:30",
+      "participants": [{
+          "firstName": "Wolfgang",
+          "surName": "Heindl"
+        },
+        {
+          "firstName": "Robert",
+          "surName": "Emhofer"
+        },
+        {
+          "firstName": "Michael",
+          "surName": "Kreil"
+        }
+      ]
+    },
+    {
+      "examId": "258.200",
+      "title": "Data & Knowledge Engineering",
+      "type": "Seminar",
+      "shortType": "SE",
+      "semester": "SS 2018",
+      "maxParticipants": 20,
+      "enrollments":5,
+      "description": "Die Studierenden können das in den Basis-, Kern- und Spezialkompetenz vermittelnden Studienfächern erworbene Wissen und die entwickelten Fähigkeiten zur Lösung von praktischen oder wissenschaftlichen Problemstellungen der Wirtschaftsinformatik anwenden. ",
+      "enrollmentStart": "20.05.2018",
+      "enrollmentEnd": "5.06.2018",
+      "examDate": "20.05.2018",
+      "examStart": "10:00",
+      "examEnd": "12:30",
+      "participants": [{
+          "firstName": "Lisa",
+          "surName": "Grurl"
+        },
+        {
+          "firstName": "Lukas",
+          "surName": "Kleinhagauer"
+        },
+        {
+          "firstName": "Michael",
+          "surName": "Kreil"
+        }
+      ]
+    }
+
+  ]
+}

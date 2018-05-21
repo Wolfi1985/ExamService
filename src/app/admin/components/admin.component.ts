@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AdminService } from '../services/admin.service';
+import { Exam } from '../../model/exam';
 
 @Component({
   selector: 'app-admin',
@@ -6,9 +8,36 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminComponent implements OnInit {
 
-  constructor() { }
+  public exams: Exam[] = [];
+  public currentExam: Exam;
+  public examToAdd: Exam;
+  public addExam: boolean;
 
-  ngOnInit() {
+  constructor(private adminService: AdminService) {
+    this.addExam = false;
   }
 
+  ngOnInit() {
+    // patch to API after backend is finished
+    this.adminService.fetchData('assets/mockingData/exam-mocking-data.json', (exams) => this.fetchDataDone(exams));
+  }
+
+  fetchDataDone(exams: any) {
+    this.exams = exams.enrollments;
+    this.setCurrentDetail(this.exams[0]);  // initially set to first element
+  }
+  setCurrentDetail(currentExam: any) {
+    this.currentExam = currentExam;
+    console.log(currentExam);
+  }
+
+  addNewExam() {
+    this.addExam = true;
+    this.examToAdd = new Exam();
+    this.exams.push(this.examToAdd);
+  }
+  persistExam() {
+    // ToDo persit Exam in Database e.g. this.examToAdd
+    this.addExam = false;
+  }
 }
