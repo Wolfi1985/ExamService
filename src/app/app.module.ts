@@ -17,6 +17,7 @@ import { ModalWindowComponent } from './modal-window/modal-window.component';
 
 // services
 import { AdminService } from './admin/services/admin.service';
+import { ExamService } from './exams/services/exam.service';
 import { LoginService } from './login/services/login.service';
 import { StartMenuService } from './menu/services/start-menu.service';
 
@@ -39,6 +40,7 @@ import { AppRoutingModule } from './app.router.component';
   ],
   providers: [
     AdminService,
+    ExamService,
     LoginService,
     StartMenuService
   ],

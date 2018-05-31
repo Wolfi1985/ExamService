@@ -13,6 +13,7 @@ export class AdminComponent implements OnInit {
   public examToAdd: Exam;
   public addExam: boolean;
 
+
   constructor(private adminService: AdminService) {
     this.addExam = false;
   }
@@ -28,16 +29,28 @@ export class AdminComponent implements OnInit {
   }
   setCurrentDetail(currentExam: any) {
     this.currentExam = currentExam;
-    console.log(currentExam);
   }
 
   addNewExam() {
     this.addExam = true;
     this.examToAdd = new Exam();
     this.exams.push(this.examToAdd);
+    this.currentExam = this.examToAdd;
   }
   persistExam() {
     // ToDo persit Exam in Database e.g. this.examToAdd
     this.addExam = false;
+    this.adminService.addNewExam(this.examToAdd);
+  }
+  saveChanges() {
+    // ToDo persit Exam in Database e.g. this.currentExam
+    this.adminService.saveChanges(this.currentExam);
+  }
+  setActive(examId: string) {
+    if (examId === this.currentExam.examId) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

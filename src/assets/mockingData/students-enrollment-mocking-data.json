@@ -13,6 +13,7 @@
       "examDate": "20.05.2018",
       "examStart": "15:00",
       "examEnd": "16:30",
+      "subscribe": false,
       "participants": [{
           "firstName": "Wolfgang",
           "surName": "Heindl"
@@ -48,6 +49,7 @@
       "examDate": "18.06.2018",
       "examStart": "12:00",
       "examEnd": "15:30",
+      "subscribe": false,
       "participants": [{
           "firstName": "Wolfgang",
           "surName": "Heindl"
@@ -76,6 +78,7 @@
       "examDate": "20.05.2018",
       "examStart": "10:00",
       "examEnd": "12:30",
+      "subscribe": false,
       "participants": [{
           "firstName": "Lisa",
           "surName": "Grurl"

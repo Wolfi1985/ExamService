@@ -11,6 +11,7 @@ export class Exam {
     public examDate: string;
     public examStart: string;
     public examEnd: string;
+    public subscribe: boolean;
     public participants: any[];
 
     constructor() {
@@ -26,6 +27,7 @@ export class Exam {
         this.examDate = '';
         this.examStart = '';
         this.examEnd = '';
+        this.subscribe = false;
         this.participants = [];
     }
 }

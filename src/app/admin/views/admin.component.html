@@ -5,7 +5,7 @@
       <h4 class="d-inline-block mr-5">Exams</h4>
       <button type="submit" *ngIf="addExam === false" class="btn btn-primary d-inline-block" (click)="addNewExam()">Add Exam</button>
       <ul class="list-group">
-        <li class="list-group-item mt-3" style="height: 50px; background:lightgray" *ngFor="let exam of exams" (click)="setCurrentDetail(exam)">
+        <li class="list-group-item mt-3" [class.active]="setActive(exam.examId)" style="height: 50px; background:lightgray" *ngFor="let exam of exams" (click)="setCurrentDetail(exam)">
           <p class="d-inline-block mr-1" style="width: 80px;">{{exam.type}}</p>
           <p class="d-inline-block mr-1" style="width: 250px;">{{exam.title}}</p>
           <p class="d-inline-block mr-2" style="width: 60px;">{{exam.examId}}</p>
@@ -15,7 +15,7 @@
     </div>
     <!-- detail view of all exams-->
     <div class="col-6 pl-5 fa-pull-right" *ngIf="currentExam !== undefined && currentExam !== null && addExam === false">
-      <h4>Details {{currentExam.title}}</h4>
+      <h4>Details: {{currentExam.title}}</h4>
       <table class="table">
         <tbody>
           <tr>
@@ -25,11 +25,24 @@
             </td>
           </tr>
           <tr>
-            <th>Title</th>
+            <th>Type</th>
             <td>
               <input type="text" class="d-inline-block form-control col-2" placeholder="Type" [(ngModel)]="currentExam.shortType" name="type">
-              <input type="text" class="d-inline-block form-control col-9 fa-pull-right" placeholder="Title of the Exam" [(ngModel)]="currentExam.title"
-                name="title">
+                <input type="text" class="d-inline-block form-control col-9 fa-pull-right" placeholder="e.g. Vorlesung" [(ngModel)]="currentExam.type" name="type">
+            </td>
+          </tr>
+          <tr>
+            <th>Title</th>
+            <td>
+              <input type="text" class="form-control" placeholder="Title of the Exam" [(ngModel)]="currentExam.title"
+              name="title">
+            </td>
+          </tr>
+          <tr>
+            <th>Semester</th>
+            <td>
+              <input type="text" class="form-control" placeholder="Semester e.g. SS 2018" [(ngModel)]="currentExam.semester"
+              name="semester">
             </td>
           </tr>
           <tr>
@@ -50,6 +63,36 @@
               <textarea class="form-control" id="description" rows="4" [(ngModel)]="currentExam.description"></textarea>
             </td>
           </tr>
+          <tr>
+            <th>Enrollment Start</th>
+            <td>
+              <input type="text" class="form-control" placeholder="20.05.2018" [(ngModel)]="currentExam.enrollmentStart" name="enrollmentStart">
+            </td>
+          </tr>
+          <tr>
+            <th>Enrollment End</th>
+            <td>
+              <input type="text" class="form-control" placeholder="20.05.2018" [(ngModel)]="currentExam.enrollmentEnd" name="enrollmentEnd">
+            </td>
+          </tr>
+          <tr>
+            <th>Exam Date</th>
+            <td>
+              <input type="text" class="form-control" placeholder="20.05.2018" [(ngModel)]="currentExam.examDate" name="examDate">
+            </td>
+          </tr>
+          <tr>
+            <th>Exam Start</th>
+            <td>
+              <input type="text" class="form-control" placeholder="20.05.2018" [(ngModel)]="currentExam.examStart" name="examStart">
+            </td>
+          </tr>
+          <tr>
+            <th>Exam End</th>
+            <td>
+              <input type="text" class="form-control" placeholder="20.05.2018" [(ngModel)]="currentExam.examEnd" name="examEnd">
+            </td>
+          </tr>
         </tbody>
       </table>
       <div class="col-12 text-center">
@@ -58,7 +101,7 @@
     </div>
     <!-- detail view of all exams-->
     <div class="col-6 pl-5 fa-pull-right" *ngIf="examToAdd !== undefined && examToAdd !== null && addExam === true">
-      <h4>Details {{examToAdd.title}}</h4>
+      <h4>Add Exam {{examToAdd.title}}</h4>
       <table class="table">
         <tbody>
           <tr>
@@ -70,15 +113,22 @@
           <tr>
             <th>Type</th>
             <td>
-              <input type="text" class="d-inline-block form-control col-2" placeholder="Short Type" [(ngModel)]="examToAdd.shortType" name="shortType">
-              <input type="text" class="d-inline-block form-control col-9 fa-pull-right" placeholder="Type" [(ngModel)]="examToAdd.type"
-                name="type">
+              <input type="text" class="d-inline-block form-control col-2" placeholder="Type" [(ngModel)]="examToAdd.shortType" name="type">
+                <input type="text" class="d-inline-block form-control col-9 fa-pull-right" placeholder="e.g. Vorlesung" [(ngModel)]="examToAdd.type" name="type">
             </td>
           </tr>
           <tr>
             <th>Title</th>
             <td>
-              <input type="text" class="form-control" placeholder="Title of the Exam" [(ngModel)]="examToAdd.title" name="title">
+              <input type="text" class="form-control" placeholder="Title of the Exam" [(ngModel)]="examToAdd.title"
+              name="title">
+            </td>
+          </tr>
+          <tr>
+            <th>Semester</th>
+            <td>
+              <input type="text" class="form-control" placeholder="Semester e.g. SS 2018" [(ngModel)]="examToAdd.semester"
+              name="semester">
             </td>
           </tr>
           <tr>
@@ -88,15 +138,45 @@
             </td>
           </tr>
           <tr>
-            <th>Semester</th>
+            <th>Act. Part.</th>
             <td>
-              <input type="text" class="form-control" placeholder="SS 2000" [(ngModel)]="examToAdd.semester" name="semester">
+              <input type="text" class="form-control" placeholder="e.g. 100" [(ngModel)]="examToAdd.enrollments" name="enrollments">
             </td>
           </tr>
           <tr>
             <th>Description</th>
             <td>
               <textarea class="form-control" id="description" rows="4" [(ngModel)]="examToAdd.description"></textarea>
+            </td>
+          </tr>
+          <tr>
+            <th>Enrollment Start</th>
+            <td>
+              <input type="text" class="form-control" placeholder="20.05.2018" [(ngModel)]="examToAdd.enrollmentStart" name="enrollmentStart">
+            </td>
+          </tr>
+          <tr>
+            <th>Enrollment End</th>
+            <td>
+              <input type="text" class="form-control" placeholder="20.05.2018" [(ngModel)]="examToAdd.enrollmentEnd" name="enrollmentEnd">
+            </td>
+          </tr>
+          <tr>
+            <th>Exam Date</th>
+            <td>
+              <input type="text" class="form-control" placeholder="20.05.2018" [(ngModel)]="examToAdd.examDate" name="examDate">
+            </td>
+          </tr>
+          <tr>
+            <th>Exam Start</th>
+            <td>
+              <input type="text" class="form-control" placeholder="20.05.2018" [(ngModel)]="examToAdd.examStart" name="examStart">
+            </td>
+          </tr>
+          <tr>
+            <th>Exam End</th>
+            <td>
+              <input type="text" class="form-control" placeholder="20.05.2018" [(ngModel)]="examToAdd.examEnd" name="examEnd">
             </td>
           </tr>
         </tbody>

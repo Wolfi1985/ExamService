@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light" *ngIf="isLoggedIn === true">
   <a class="navbar-brand" href="">
-    <img src="./assets/img/JKU.jpg" height="50" width="auto" />
+    <img src="./assets/img/JKU.png" height="50" width="auto" />
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
     aria-expanded="false" aria-label="Toggle navigation">
@@ -40,7 +40,7 @@
     </ul>
     <ul class="navbar-nav pull-sm-right">
       <span class="navbar-text mr-4">
-        Hello Mr. {{firstName}} {{surName}}
+        Hello Mr. {{user.firstName}} {{user.surName}}
       </span>
       <button type="button" class="btn btn-dark" [routerLink]="['/']" (click)="logout()">Logout</button>
     </ul>
@@ -65,7 +65,23 @@
       </div>
     </div>
     <div class="app-modal-footer">
-        <button type="button" class="btn btn-dark" [routerLink]="['/']" (click)="close()">Okay</button>
+        <button type="button" class="btn btn-dark" [routerLink]="['/']" (click)="closeError()">Okay</button>
     </div>
   </app-modal-window>
 </div>
+<app-modal-window #successMsg>
+  <div class="app-modal-header">
+    <h4>Success</h4>
+  </div>
+  <div class="app-modal-body">
+    <div class="row text-center d-block" style="text-align: center;">
+      <h4 class="col-12 text-center" style="margin:0 auto; margin-bottom:20px;">
+        {{errorMessage}}
+      </h4>
+      <i class="fas fa-lock fa-3x"></i>
+    </div>
+  </div>
+  <div class="app-modal-footer">
+      <button type="button" class="btn btn-dark" (click)="closeSuccess()">Okay</button>
+  </div>
+</app-modal-window>

@@ -8,3 +8,6 @@
 .modal-dialog {
     margin: 20vh auto 0px auto
 }
+.list-group-item.active {
+    background-color: #28a745 !important;
+}
