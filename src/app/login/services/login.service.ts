@@ -1,4 +1,4 @@
-import { Injectable, } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
@@ -12,10 +12,10 @@ import { User } from '../../model/user';
 @Injectable()
 export class LoginService implements CanActivate {
 
-  private isLoggedIn: boolean;
+  public isLoggedIn: boolean;
   private user: User;
 
-  private subject = new Subject<any>();
+  private subject: Subject<any>;
 
   private errorMessageWindow: ModalWindowComponent;
   private successMessageWindow: ModalWindowComponent;
@@ -33,10 +33,14 @@ export class LoginService implements CanActivate {
   options: RequestOptions;
 
   constructor(private http: Http, private router: Router) {
-    this.isLoggedIn = false;
     // this.firstName = 'John';  // default
     // this.surName = 'Doe'; // default
+
+    this.isLoggedIn = false;
+
     this.user = new User(); // user that is logged in
+
+    this.subject = new Subject<any>();
 
     this.errorMessageSubject = new Subject<String>();
     this.errorMessages = this.errorMessageSubject.asObservable();
@@ -44,13 +48,19 @@ export class LoginService implements CanActivate {
     this.successMessageSubject = new Subject<String>();
     this.successMessages = this.successMessageSubject.asObservable();
 
-    this.url = 'assets/mockingData/person-mocking-data.json';
+    this.url = 'http://localhost:8080';
 
     this.headers = new Headers({
       'Content-Type': 'application/json',
-      'Accept': 'q=0.8;application/json;q=0.9'
+      'Accept': 'application/json;',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
     });
-    this.params = new HttpParams();
+  }
+
+  public getUser() {
+    return this.user;
   }
 
   public getIsLoggedIn(): boolean {
@@ -63,16 +73,13 @@ export class LoginService implements CanActivate {
   // ToDo
   public login(userName: string, password: string) {
     console.log(userName + ' ' + password);
-    // http-get to check if user can log in, e.g. set variable isLoggedIn to true
-    this.params.set('userName', userName);
-    this.params.set('password', password);
-
-    this.options = new RequestOptions({ headers: this.headers, params: this.params });
-    this.getUserData();
+    this.isLoggedIn = false;
+    this.options = new RequestOptions({ headers: this.headers });
+    this.getUserData(userName, password);
   }
 
   public logout() {
-    this.setIsLoggedIn(false);
+    this.isLoggedIn = false;
     this.subject.next({ login: false, user: this.user });
   }
 
@@ -80,35 +87,41 @@ export class LoginService implements CanActivate {
     return this.subject.asObservable();
   }
 
-  public getUserData() {
+  public getUserData(userName: string, password: string) {
     console.log(this.options.headers);
-    console.log(this.options.params);
+    // console.log(this.options.params);
     this.http
-      .get(this.url, this.options)
+      .get(this.url + '/user/login?username=' + userName + '&password=' + password, this.options)
       .toPromise()
       .then(
         res => {
-          console.log(res.json());  // ToDo load user Data and save to variable user
-          const user = res.json();
-          console.log('ToDo: check if User exists in DB');
+
+          const data = res.json();
+          const user = new User();
+
+          console.log(data);  // ToDo load user Data and save to variable user
+
           // set userData
-          this.user.firstName = user.firstName;
-          this.user.surName = user.surName;
-          this.user.isFemale = user.isFemale;
-          this.user.isStudent = user.isStudent;
-          this.setIsLoggedIn(true);
+          this.user.firstName = data.firstName;
+          this.user.surName = data.surName;
+          this.user.mkNumber = data.mkNumber;
+          this.user.isFemale = data.isFemale;
+          this.user.isStudent = data.isStudent;
+          this.isLoggedIn = true;
           this.subject.next({ login: true, user: this.user });
           this.router.navigateByUrl('/StartMenu');
         }
       )
-      .catch(this.handleError);
-  }
-
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error);
-    this.setIsLoggedIn(false);
-    this.subject.next({ login: false, user: this.user });
-    return Promise.reject(error.message || error);
+      .catch((error: Response) => {
+        if (error.status === 401) {
+          this.showErrorMessage('Your password is not correct!');
+        } else if (error.status === 404) {
+          this.showErrorMessage('The user does\'t exist!');
+        }
+        console.error('An error occurred', error);
+        this.subject.next({ login: false, user: this.user });
+      }
+      );
   }
 
   // routing guard method
@@ -123,6 +136,7 @@ export class LoginService implements CanActivate {
 
   // set Modal Windows
   public setModalWindows(errorMessageWindow: ModalWindowComponent, successMessageWindow: ModalWindowComponent) {
+    console.log('login first');
     this.errorMessageWindow = errorMessageWindow;
     this.successMessageWindow = successMessageWindow;
   }

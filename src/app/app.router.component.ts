@@ -15,7 +15,7 @@ const routes: Routes = [
     }, {
         path: 'StartMenu',
         component: StartMenuComponent,
-        canActivate: [LoginService]
+        canActivate: [LoginService],
     }
     , {
         path: 'Admin',

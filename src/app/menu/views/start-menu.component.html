@@ -1,12 +1,16 @@
 <div class="container" style="margin-top:10%;">
   <div class="row h-100">
-    <div class="col-12 col-md-6 text-center my-auto">
-      <img class="rounded mx-auto d-block img" src="./assets/img/admin.png">
+    <div class="col-12 col-md-6 text-center my-auto" *ngIf="user.isStudent === false">
+      <img class="rounded mx-auto d-block img" [routerLink]="['/Admin']" src="./assets/img/admin.png">
       <button type="button" class="btn btn-primary mt-5" [routerLink]="['/Admin']">Administration</button>
     </div>
-    <div class="col-12 col-md-6 text-center my-auto">
-      <img class="rounded mx-auto d-block img" src="./assets/img/exam.png">
+    <div class="col-12 col-md-6 text-center my-auto" *ngIf="user.isStudent === false">
+      <img class="rounded mx-auto d-block img" [routerLink]="['/Exam']" src="./assets/img/exam.png">
       <button type="button" class="btn btn-warning mt-5" [routerLink]="['/Exam']">Exams</button>
     </div>
+    <div class="col-12 col-md-12 text-center my-auto" *ngIf="user.isStudent === true">
+        <img class="rounded mx-auto d-block img" [routerLink]="['/Exam']" src="./assets/img/exam.png">
+        <button type="button" class="btn btn-warning mt-5" [routerLink]="['/Exam']">Exams</button>
+      </div>
   </div>
 </div>

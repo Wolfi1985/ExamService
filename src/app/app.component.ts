@@ -35,6 +35,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    console.log('app first');
     this.loginService.setModalWindows(this.errorMessageWindow, this.successMessageWindow);
 
     if (this.errorSubscription === null) {

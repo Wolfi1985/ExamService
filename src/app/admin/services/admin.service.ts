@@ -11,20 +11,24 @@ export class AdminService implements OnInit {
   private url: string;
 
   constructor(private http: Http) {
+    this.url = 'http://localhost:8080';
+
     this.headers = new Headers({
       'Content-Type': 'application/json',
-      'Accept': 'q=0.8;application/json;q=0.9'
+      'Accept': 'application/json;',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
     });
     this.options = new RequestOptions({ headers: this.headers });
   }
 
   ngOnInit() {
-    this.url = 'http://localhost:8080/api/';
   }
 
   public fetchData(url: string, callback: Function) {
     this.http
-      .get(url, this.options)
+      .get(this.url + '/getAllExams/', this.options)
       .toPromise()
       .then(
         res => {
@@ -40,9 +44,8 @@ export class AdminService implements OnInit {
   }
 
   public saveChanges(exam: Exam) {
-    console.log('ToDo: update exam in Database! + this.currentExam');
     this.http
-      .post(this.url + 'changeExam', this.options)
+      .post(this.url + '/updateExam/', exam, this.options)
       .toPromise()
       .then(
         res => {
@@ -54,9 +57,19 @@ export class AdminService implements OnInit {
   }
 
   public addNewExam(exam: Exam) {
-    console.log('ToDo: persist new Exam in Database! + this.examToAdd');
     this.http
-      .put(this.url + 'addExam', this.options)
+      .put(this.url + '/addExam/', exam, this.options)
+      .toPromise()
+      .then(
+        res => {
+          console.log(res.json());
+        }
+      )
+      .catch(this.handleError);
+  }
+  public deleteExam(exam: Exam) {
+    this.http
+      .put(this.url + '/deleteExam/' + exam.examId, this.options)
       .toPromise()
       .then(
         res => {

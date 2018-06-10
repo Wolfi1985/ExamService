@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { LoginService } from '../services/login.service';
+import { User } from '../../model/user';
 
 @Component({
   selector: 'app-login',
