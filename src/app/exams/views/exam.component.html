@@ -7,16 +7,16 @@
       <ul class="list-group">
         <li class="list-group-item mt-3" [class.active]="setActive(exam.examId)" style="height: 50px; background:lightgray;" *ngFor="let exam of exams"
           (click)="setCurrentDetail(exam)">
-          <p class="d-inline-block mr-1" style="width: 80px;">{{exam.type}}</p>
+          <p class="d-inline-block mr-1" style="width: 100px;">{{exam.type}}</p>
           <p class="d-inline-block mr-1" style="width: 250px;">{{exam.title}}</p>
           <p class="d-inline-block mr-2" style="width: 80px;">{{exam.examId}}</p>
           <p class="d-inline-block mr-1" style="width: 80px;">{{exam.semester}}</p>
-          <p class="d-inline-block mr-1" style="width: 100px;">START: {{exam.examStart}}</p>
-          <p class="d-inline-block mr-1" style="width: 100px;">END: {{exam.examEnd}}</p>
-          <button *ngIf="exam.subscribe === false" type="submit" class="btn btn-xs btn-dark fa-pull-right" style="width:120px; transform: translateY(-20%);"
+          <p class="d-inline-block mr-1" style="width: 120px;">START: {{exam.examStart | date:'shortTime'}}</p>
+          <p class="d-inline-block mr-1" style="width: 120px;">END: {{exam.examEnd | date:'shortTime'}}</p>
+          <button  type="submit" *ngIf="user.isStudent === true" class="btn btn-xs btn-dark fa-pull-right" style="width:120px; transform: translateY(-20%);"
             (click)="subscribe(exam)">Subscribe</button>
-          <button *ngIf="exam.subscribe === true" type="submit" class="btn btn-xs btn-success fa-pull-right" style="width:120px; transform: translateY(-20%);"
-            (click)="unsubscribe(exam)">Unsubscribe</button>
+          <button  type="submit" class="btn btn-xs btn-success fa-pull-right" style="width:120px; transform: translateY(-20%);"
+            (click)="unsubscribe(exam)" *ngIf="user.isStudent === true">Unsubscribe</button>
         </li>
       </ul>
     </div>

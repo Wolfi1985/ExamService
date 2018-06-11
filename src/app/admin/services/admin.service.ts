@@ -15,10 +15,7 @@ export class AdminService implements OnInit {
 
     this.headers = new Headers({
       'Content-Type': 'application/json',
-      'Accept': 'application/json;',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-      'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
+      'Accept': 'application/json;'
     });
     this.options = new RequestOptions({ headers: this.headers });
   }
@@ -26,13 +23,15 @@ export class AdminService implements OnInit {
   ngOnInit() {
   }
 
-  public fetchData(url: string, callback: Function) {
+  public fetchData(callback: Function) {
     this.http
       .get(this.url + '/getAllExams/', this.options)
       .toPromise()
       .then(
         res => {
-          callback(res.json());
+          const data = res.json();
+          console.log('data fetched');
+          callback(data);
         }
       )
       .catch(this.handleError);
@@ -43,37 +42,45 @@ export class AdminService implements OnInit {
     return Promise.reject(error.message || error);
   }
 
-  public saveChanges(exam: Exam) {
-    this.http
-      .post(this.url + '/updateExam/', exam, this.options)
-      .toPromise()
-      .then(
-        res => {
-          console.log(res.json());
-          console.log('ToDo: show success');
-        }
-      )
+  public saveChanges(exam: Exam, callback: Function) {
+    const completed = this.http
+      .put(this.url + '/exam/', JSON.stringify(exam), this.options)
+      .toPromise();
+
+    completed.then(
+      res => {
+        console.log(res);
+        console.log('ToDo: show success');
+        const data = res.json();
+        callback(data);
+      }
+    )
       .catch(this.handleError);
   }
 
-  public addNewExam(exam: Exam) {
+  public addNewExam(exam: Exam, callback: Function) {
     this.http
-      .put(this.url + '/addExam/', exam, this.options)
+      .post(this.url + '/exam/', JSON.stringify(exam), this.options)
       .toPromise()
       .then(
         res => {
-          console.log(res.json());
+          console.log(res);
+          const data = res.json();
+          callback(data);
         }
       )
       .catch(this.handleError);
   }
-  public deleteExam(exam: Exam) {
+  public deleteExam(exam: Exam, callback: Function) {
+    console.log();
     this.http
-      .put(this.url + '/deleteExam/' + exam.examId, this.options)
+      .delete(this.url + '/exam/' + exam.examId, this.options)
       .toPromise()
       .then(
         res => {
-          console.log(res.json());
+          console.log(res);
+          const data = res.json();
+          callback(data);
         }
       )
       .catch(this.handleError);

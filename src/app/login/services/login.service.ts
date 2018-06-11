@@ -59,7 +59,7 @@ export class LoginService implements CanActivate {
     });
   }
 
-  public getUser() {
+  public getUser(): User {
     return this.user;
   }
 
@@ -107,6 +107,7 @@ export class LoginService implements CanActivate {
           this.user.mkNumber = data.mkNumber;
           this.user.isFemale = data.isFemale;
           this.user.isStudent = data.isStudent;
+          this.user.userName = data.userName;
           this.isLoggedIn = true;
           this.subject.next({ login: true, user: this.user });
           this.router.navigateByUrl('/StartMenu');
@@ -136,7 +137,6 @@ export class LoginService implements CanActivate {
 
   // set Modal Windows
   public setModalWindows(errorMessageWindow: ModalWindowComponent, successMessageWindow: ModalWindowComponent) {
-    console.log('login first');
     this.errorMessageWindow = errorMessageWindow;
     this.successMessageWindow = successMessageWindow;
   }

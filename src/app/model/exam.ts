@@ -6,13 +6,14 @@ export class Exam {
     public maxParticipants: number;
     public enrollments: number;
     public description: string;
-    public enrollmentStart: string;
-    public enrollmentEnd: string;
-    public examDate: string;
-    public examStart: string;
-    public examEnd: string;
+    public enrollmentStart: Date;
+    public enrollmentEnd: Date;
+    public examDate: Date;
+    public examStart: Date;
+    public examEnd: Date;
     public subscribe: boolean;
     public participants: any[];
+    public isEnrolled: boolean;
 
     constructor() {
         this.examId = '';
@@ -22,12 +23,14 @@ export class Exam {
         this.maxParticipants = 0;
         this.enrollments = 0;
         this.description = '';
-        this.enrollmentStart = '';
-        this.enrollmentEnd = '';
-        this.examDate = '';
-        this.examStart = '';
-        this.examEnd = '';
+        this.enrollmentStart = new Date();
+        this.enrollmentEnd = new Date();
+        this.examDate = new Date();
+        this.examStart = new Date();
+        this.examEnd = new Date();
         this.subscribe = false;
         this.participants = [];
+        this.isEnrolled = false;
     }
+
 }

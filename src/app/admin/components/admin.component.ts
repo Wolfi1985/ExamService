@@ -20,11 +20,12 @@ export class AdminComponent implements OnInit {
 
   ngOnInit() {
     // patch to API after backend is finished
-    this.adminService.fetchData('assets/mockingData/exam-mocking-data.json', (exams) => this.fetchDataDone(exams));
+    this.adminService.fetchData((exams) => this.fetchDataDone(exams));
   }
 
   fetchDataDone(exams: any) {
-    this.exams = exams.enrollments;
+    console.log(exams);
+    this.exams = exams;
     this.setCurrentDetail(this.exams[0]);  // initially set to first element
   }
   setCurrentDetail(currentExam: any) {
@@ -34,18 +35,21 @@ export class AdminComponent implements OnInit {
   addNewExam() {
     this.addExam = true;
     this.examToAdd = new Exam();
-    this.exams.push(this.examToAdd);
     this.currentExam = this.examToAdd;
   }
   persistExam() {
     // ToDo persit Exam in Database e.g. this.examToAdd
     this.addExam = false;
-    this.adminService.addNewExam(this.examToAdd);
+    this.adminService.addNewExam(this.examToAdd, (exams) => this.fetchDataDone(exams));
   }
   saveChanges() {
     // ToDo persit Exam in Database e.g. this.currentExam
-    this.adminService.saveChanges(this.currentExam);
+    this.adminService.saveChanges(this.currentExam, (exams) => this.fetchDataDone(exams));
   }
+  deleteCurrent() {
+    this.adminService.deleteExam(this.currentExam, (exams) => this.fetchDataDone(exams));
+  }
+
   setActive(examId: string) {
     if (examId === this.currentExam.examId) {
       return true;

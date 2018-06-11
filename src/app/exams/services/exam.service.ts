@@ -2,6 +2,8 @@ import { Injectable, OnInit } from '@angular/core';
 import { Http, Response, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import { Exam } from '../../model/exam';
+import { User } from '../../model/user';
+import { LoginService } from '../../login/services/login.service';
 
 @Injectable()
 export class ExamService implements OnInit {
@@ -11,24 +13,29 @@ export class ExamService implements OnInit {
 
   private url: string;
 
-  constructor(private http: Http) {
+  private user: User;
+
+  constructor(private http: Http, private loginService: LoginService) {
     this.headers = new Headers({
       'Content-Type': 'application/json',
-      'Accept': 'q=0.8;application/json;q=0.9'
+      'Accept': 'application/json;'
     });
     this.options = new RequestOptions({ headers: this.headers });
+    this.user = this.loginService.getUser();
+    console.log(this.user);
+    this.url = 'http://localhost:8080';
   }
 
   ngOnInit() {
-    this.url = 'http://localhost:8080/api/';
   }
 
-  public fetchData(url: string, callback: Function) {
+  public fetchData(callback: Function) {
     this.http
-      .get(url, this.options)
+      .get(this.url + '/getAllStudentsExams/?mkNumber=' + this.user.mkNumber, this.options)
       .toPromise()
       .then(
         res => {
+          // console.log(res.json());
           callback(res.json());
         }
       )
@@ -38,6 +45,32 @@ export class ExamService implements OnInit {
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);
     return Promise.reject(error.message || error);
+  }
+  public subscribe(examId: string, callback: Function) {
+    this.http
+      .post(this.url + '/subscribe/?mkNumber=' + this.user.mkNumber + '&examId=' + examId, JSON.stringify(this.user.mkNumber), this.options)
+      .toPromise()
+      .then(
+        res => {
+          const data = res.json();
+          console.log(res);
+          callback(data);
+        }
+      )
+      .catch(this.handleError);
+  }
+  public unsubscribe(examId: string, callback: Function) {
+    this.http
+      .post(this.url + '/unsubscribe/?mkNumber=' + this.user.mkNumber + '&examId=' + examId, JSON.stringify(this.user.mkNumber), this.options)
+      .toPromise()
+      .then(
+        res => {
+          const data = res.json();
+          console.log(res);
+          callback(data);
+        }
+      )
+      .catch(this.handleError);
   }
 
 }
